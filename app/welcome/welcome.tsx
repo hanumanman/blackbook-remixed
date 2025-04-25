@@ -1,3 +1,4 @@
+import { Button } from "~/components/ui/button";
 import logoDark from "./logo-dark.svg";
 import logoLight from "./logo-light.svg";
 
@@ -24,6 +25,9 @@ export function Welcome() {
             <p className="leading-6 text-gray-700 dark:text-gray-200 text-center">
               What&apos;s next?
             </p>
+            <button className="bg-green-500 px-4 py-3 rounded-lg hover:bg-green-300 hover:shadow-2xs shadow-2xl cursor-pointer">
+              test btn
+            </button>
             <ul>
               {resources.map(({ href, text, icon }) => (
                 <li key={href}>
