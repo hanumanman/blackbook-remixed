@@ -1,18 +1,24 @@
-# Welcome to React Router!
+# Blackbook
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+A modern novel reading platform built with React Router and TypeScript.
 
 ## Features
 
-- 🚀 Server-side rendering
-- ⚡️ Hot Module Replacement (HMR)
-- 📦 Asset bundling and optimization
-- 🔄 Data loading and mutations
-- 🔒 TypeScript by default
-- 🎉 TailwindCSS for styling
-- 📖 [React Router docs](https://reactrouter.com/)
+- 🚀 Server-side rendering for fast page loads
+- ⚡️ Hot Module Replacement (HMR) for rapid development
+- 📚 Rich novel reading experience
+- 🔒 TypeScript for type safety
+- 🎨 Tailwind CSS with custom theming for dark/light modes
+- 📱 Responsive design for all devices
+
+## Tech Stack
+
+- [React 19](https://react.dev/)
+- [React Router 7](https://reactrouter.com/)
+- [Tailwind CSS 4](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Radix UI](https://www.radix-ui.com/) for accessible UI components
+- [Vite](https://vitejs.dev/) for fast development and optimization
 
 ## Getting Started
 
