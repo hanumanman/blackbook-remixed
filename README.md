@@ -19,6 +19,7 @@ A modern novel reading platform built with React Router and TypeScript.
 - [TypeScript](https://www.typescriptlang.org/)
 - [Radix UI](https://www.radix-ui.com/) for accessible UI components
 - [Vite](https://vitejs.dev/) for fast development and optimization
+- [Bun](https://bun.sh/) for package management and runtime
 
 ## Getting Started
 
@@ -27,7 +28,7 @@ A modern novel reading platform built with React Router and TypeScript.
 Install the dependencies:
 
 ```bash
-npm install
+bun install
 ```
 
 ### Development
@@ -35,7 +36,7 @@ npm install
 Start the development server with HMR:
 
 ```bash
-npm run dev
+bun dev
 ```
 
 Your application will be available at `http://localhost:5173`.
@@ -45,7 +46,21 @@ Your application will be available at `http://localhost:5173`.
 Create a production build:
 
 ```bash
-npm run build
+bun build
+```
+
+## Scripts
+
+Formatting
+
+```bash
+bun format
+```
+
+Linting
+
+```bash
+bun lint
 ```
 
 ## Deployment
@@ -74,11 +89,11 @@ The containerized application can be deployed to any platform that supports Dock
 
 If you're familiar with deploying Node applications, the built-in app server is production-ready.
 
-Make sure to deploy the output of `npm run build`
+Make sure to deploy the output of `bun run build`
 
 ```
 ├── package.json
-├── package-lock.json (or pnpm-lock.yaml, or bun.lockb)
+├── bun.lock
 ├── build/
 │   ├── client/    # Static assets
 │   └── server/    # Server-side code

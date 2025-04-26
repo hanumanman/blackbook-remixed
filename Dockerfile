@@ -1,22 +1,34 @@
-FROM node:20-alpine AS development-dependencies-env
-COPY . /app
+# Use the official Bun image as a base
+# See https://hub.docker.com/r/oven/bun
+# Use `debian` or `distroless` for production environments
+# See https://bun.sh/docs/installation#docker
+FROM oven/bun:1 as base
 WORKDIR /app
-RUN npm ci
 
-FROM node:20-alpine AS production-dependencies-env
-COPY ./package.json package-lock.json /app/
-WORKDIR /app
-RUN npm ci --omit=dev
+# Install dependencies only when needed
+FROM base AS install
+RUN mkdir -p /temp/dev
+COPY package.json bun.lockb /temp/dev/
+RUN cd /temp/dev && bun install --frozen-lockfile
 
-FROM node:20-alpine AS build-env
-COPY . /app/
-COPY --from=development-dependencies-env /app/node_modules /app/node_modules
-WORKDIR /app
-RUN npm run build
+RUN mkdir -p /temp/prod
+COPY package.json bun.lockb /temp/prod/
+RUN cd /temp/prod && bun install --frozen-lockfile --production
 
-FROM node:20-alpine
-COPY ./package.json package-lock.json /app/
-COPY --from=production-dependencies-env /app/node_modules /app/node_modules
-COPY --from=build-env /app/build /app/build
-WORKDIR /app
-CMD ["npm", "run", "start"]
+# Rebuild the source code only when needed
+FROM base AS build
+COPY --from=install /temp/dev/node_modules node_modules
+COPY . .
+RUN bun run build
+
+# Production image, copy all the files and run next
+FROM base AS runner
+COPY --from=install /temp/prod/node_modules node_modules
+COPY --from=build /app/build ./build
+COPY package.json .
+
+# Set the command to start the app
+CMD ["bun", "run", "start"]
+
+# Expose the port the app runs on
+EXPOSE 3000
