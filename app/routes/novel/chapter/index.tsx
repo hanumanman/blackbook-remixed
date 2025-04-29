@@ -1,4 +1,4 @@
-import { Link, useNavigation } from 'react-router';
+import { Link, PrefetchPageLinks, useNavigation } from 'react-router';
 import { getChapter } from '~/db/queries/selects';
 import { LoadingScreen } from '~/components/Loading';
 import type { Route } from './+types';
@@ -61,16 +61,17 @@ export default function ChapterPage({ loaderData }: Route.ComponentProps) {
               className="h-8 px-3"
               disabled={chapter_number <= 1}
             >
-              <Link prefetch="viewport" to={prevChapterLink} aria-label="Previous chapter">
+              <Link prefetch="render" to={prevChapterLink} aria-label="Previous chapter">
                 <ChevronLeft className="h-4 w-4 mr-1" />
                 <span className="hidden sm:inline">Previous</span>
               </Link>
             </Button>
 
             <Button asChild variant="outline" size="sm" className="h-8 px-3">
-              <Link prefetch="viewport" to={nextChapterLink} aria-label="Next chapter">
+              <Link prefetch="render" to={nextChapterLink} aria-label="Next chapter">
                 <span className="hidden sm:inline">Next</span>
                 <ChevronRight className="h-4 w-4 ml-1" />
+                <PrefetchPageLinks page={`/${novel_id}/${chapter_number + 1}`} />
               </Link>
             </Button>
           </div>
@@ -92,7 +93,7 @@ export default function ChapterPage({ loaderData }: Route.ComponentProps) {
 
       <div className="mt-12 flex flex-col justify-between space-y-4 border-t pt-6 md:flex-row md:space-x-4 md:space-y-0">
         <Button asChild variant="outline" className="md:w-auto" disabled={chapter_number <= 1}>
-          <Link prefetch="viewport" to={prevChapterLink}>
+          <Link prefetch="render" to={prevChapterLink}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -128,6 +129,7 @@ export default function ChapterPage({ loaderData }: Route.ComponentProps) {
             >
               <path d="m9 18 6-6-6-6" />
             </svg>
+            <PrefetchPageLinks page={`/${novel_id}/${chapter_number + 1}`} />
           </Link>
         </Button>
       </div>
