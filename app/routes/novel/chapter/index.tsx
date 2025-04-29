@@ -61,14 +61,14 @@ export default function ChapterPage({ loaderData }: Route.ComponentProps) {
               className="h-8 px-3"
               disabled={chapter_number <= 1}
             >
-              <Link to={prevChapterLink} aria-label="Previous chapter">
+              <Link prefetch="viewport" to={prevChapterLink} aria-label="Previous chapter">
                 <ChevronLeft className="h-4 w-4 mr-1" />
                 <span className="hidden sm:inline">Previous</span>
               </Link>
             </Button>
 
             <Button asChild variant="outline" size="sm" className="h-8 px-3">
-              <Link to={nextChapterLink} aria-label="Next chapter">
+              <Link prefetch="viewport" to={nextChapterLink} aria-label="Next chapter">
                 <span className="hidden sm:inline">Next</span>
                 <ChevronRight className="h-4 w-4 ml-1" />
               </Link>
@@ -92,7 +92,7 @@ export default function ChapterPage({ loaderData }: Route.ComponentProps) {
 
       <div className="mt-12 flex flex-col justify-between space-y-4 border-t pt-6 md:flex-row md:space-x-4 md:space-y-0">
         <Button asChild variant="outline" className="md:w-auto" disabled={chapter_number <= 1}>
-          <Link to={prevChapterLink}>
+          <Link prefetch="viewport" to={prevChapterLink}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
