@@ -3,7 +3,8 @@ import { getChapter } from '~/db/queries/selects';
 import { LoadingScreen } from '~/components/Loading';
 import type { Route } from './+types';
 import { Button } from '~/components/ui/button';
-import { ChevronLeft, ChevronRight } from 'lucide-react'; // Import Lucide icons
+import { ChevronDown, ChevronLeft, ChevronRight, ChevronUp } from 'lucide-react'; // Import Lucide icons
+import { plainContentToParagraphs, scrollPage } from '~/lib/utils';
 
 export function loader({ params }: Route.LoaderArgs) {
   const novelId = parseInt(params.novelId);
@@ -26,12 +27,10 @@ export default function ChapterPage({ loaderData }: Route.ComponentProps) {
   const navigation = useNavigation();
   const isNavigating = navigation.state !== 'idle';
 
-  // Convert plain content to paragraphs
-  const contentParagraphs = chapter_content.split('\n\n').filter(Boolean);
+  const contentParagraphs = plainContentToParagraphs(chapter_content);
 
   const prevChapterLink =
     chapter_number > 1 ? `/${novel_id}/${chapter_number - 1}` : `/${novel_id}`;
-
   const nextChapterLink = `/${novel_id}/${chapter_number + 1}`;
 
   return (
@@ -52,8 +51,17 @@ export default function ChapterPage({ loaderData }: Route.ComponentProps) {
         <div className="flex justify-between pt-4 items-center">
           <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
             Chapter {chapter_number}
+            <PrefetchPageLinks page={`/${novel_id}/${chapter_number + 1}`} />
           </h1>
           <div className="flex items-center space-x-2">
+            <Button
+              onClick={() => scrollPage('bottom')}
+              className="h-8 px-3 cursor-pointer"
+              size={'sm'}
+              variant={'outline'}
+            >
+              <ChevronDown className="h-4 w-4 mr-1" />
+            </Button>
             <Button
               asChild
               variant="outline"
@@ -91,7 +99,11 @@ export default function ChapterPage({ loaderData }: Route.ComponentProps) {
         </div>
       )}
 
-      <div className="mt-12 flex flex-col justify-between space-y-4 border-t pt-6 md:flex-row md:space-x-4 md:space-y-0">
+      <div className="mt-12 flex flex-col-reverse gap-4 justify-between  border-t pt-6 md:flex-row md:space-x-4 md:space-y-0">
+        <Button onClick={() => scrollPage('top')} variant="outline" className="md:w-auto">
+          <ChevronUp className="h-4 w-4" />
+          Go back to Top
+        </Button>
         <Button asChild variant="outline" className="md:w-auto" disabled={chapter_number <= 1}>
           <Link prefetch="render" to={prevChapterLink}>
             <svg
@@ -129,7 +141,6 @@ export default function ChapterPage({ loaderData }: Route.ComponentProps) {
             >
               <path d="m9 18 6-6-6-6" />
             </svg>
-            <PrefetchPageLinks page={`/${novel_id}/${chapter_number + 1}`} />
           </Link>
         </Button>
       </div>
